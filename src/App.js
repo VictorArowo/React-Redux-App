@@ -3,14 +3,12 @@ import Title from './components/Title';
 import Media from './components/Media';
 import Explanation from './components/Explanation';
 import Copyright from './components/Copyright.js';
-import axios from 'axios';
 import Date from './components/Date';
 import Logo from './components/Logo';
 import Video from './components/Video';
 import styled from 'styled-components';
 
-import { Provider, connect } from 'react-redux';
-import store from './redux/store';
+import { connect } from 'react-redux';
 import { getData } from './redux/actions/actions';
 
 const Div = styled.div`
@@ -55,29 +53,27 @@ function App({ data, getData }) {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Div>
-        <div className="header">
-          <Logo />
-          <h1>PHOTO OF THE DAY</h1>
-          <Date />
+    <Div>
+      <div className="header">
+        <Logo />
+        <h1>PHOTO OF THE DAY</h1>
+        <Date />
+      </div>
+      <main>
+        <div className="left">
+          <Title />
+          <Explanation />
         </div>
-        <main>
-          <div className="left">
-            <Title />
-            <Explanation />
-          </div>
-          <div className="right">
-            {data.media_type === 'image' ? (
-              <Media url={data.url} />
-            ) : (
-              <Video url={data.url} />
-            )}
-          </div>
-        </main>
-        <Copyright />
-      </Div>
-    </Provider>
+        <div className="right">
+          {data.media_type === 'image' ? (
+            <Media url={data.url} />
+          ) : (
+            <Video url={data.url} />
+          )}
+        </div>
+      </main>
+      <Copyright />
+    </Div>
   );
 }
 
